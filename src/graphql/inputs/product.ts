@@ -1,7 +1,7 @@
 import { inputObjectType } from "nexus";
 
-export const newProductInput = inputObjectType({
-  name: "newProductInput",
+export const createProductInput = inputObjectType({
+  name: "createProductInput",
   definition(t) {
     t.nonNull.string("name");
     t.nonNull.string("code");
@@ -10,5 +10,35 @@ export const newProductInput = inputObjectType({
     t.nonNull.float("start_price");
     t.nonNull.float("end_price");
     t.nonNull.int("categoryId");
+  },
+});
+
+export const deleteProductInput = inputObjectType({
+  name: "deleteProductInput",
+  definition(t) {
+    t.nonNull.int("id");
+  },
+});
+
+export const sellProductInput = inputObjectType({
+  name: "sellProductInput",
+  definition(t) {
+    t.nonNull.int("id");
+    t.nonNull.int("count");
+  },
+});
+
+export const fliterProductsInput = inputObjectType({
+  name: "fliterProductsInput",
+  definition(t) {
+    t.nullable.int("count");
+    t.nullable.int("categoryId");
+  },
+});
+
+export const getOneProductInput = inputObjectType({
+  name: "getOneProductInput",
+  definition(t) {
+    t.nonNull.int("id");
   },
 });

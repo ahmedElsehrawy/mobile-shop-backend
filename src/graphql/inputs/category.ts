@@ -6,3 +6,10 @@ export const newCategoryInput = inputObjectType({
     t.nonNull.string("name");
   },
 });
+
+export const deleteCategoryInput = inputObjectType({
+  name: "deleteCategoryInput",
+  definition(t) {
+    t.nonNull.int("id");
+  },
+});

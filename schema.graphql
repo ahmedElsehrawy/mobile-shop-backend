@@ -10,10 +10,14 @@ type Category {
 
 type Mutation {
   createCategory(input: newCategoryInput!): Category!
-  createProduct(input: newProductInput!): Product!
+  createProduct(input: createProductInput!): Product!
+  deleteCategory(input: deleteCategoryInput!): Product!
+  deleteProduct(input: deleteProductInput!): Product!
+  sellProduct(input: sellProductInput!): Product!
 }
 
 type Product {
+  category: category!
   categoryId: Int!
   code: String!
   count: Int!
@@ -26,14 +30,17 @@ type Product {
 
 type Query {
   categories: [Category!]!
-  products: [Product!]!
+  getOneProduct(where: getOneProductInput!): Product!
+  products(skip: Int!, take: Int!, where: fliterProductsInput): products!
 }
 
-input newCategoryInput {
+type category {
+  Product: [Product!]!
+  id: Int!
   name: String!
 }
 
-input newProductInput {
+input createProductInput {
   categoryId: Int!
   code: String!
   count: Int!
@@ -41,4 +48,35 @@ input newProductInput {
   name: String!
   original_price: Float!
   start_price: Float!
+}
+
+input deleteCategoryInput {
+  id: Int!
+}
+
+input deleteProductInput {
+  id: Int!
+}
+
+input fliterProductsInput {
+  categoryId: Int
+  count: Int
+}
+
+input getOneProductInput {
+  id: Int!
+}
+
+input newCategoryInput {
+  name: String!
+}
+
+type products {
+  count: Int!
+  nodes: [Product!]!
+}
+
+input sellProductInput {
+  count: Int!
+  id: Int!
 }
