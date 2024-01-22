@@ -23,6 +23,11 @@ export interface NexusGenInputs {
     original_price: number; // Float!
     start_price: number; // Float!
   }
+  createSoldProductInput: { // input type
+    productId: number; // Int!
+    quantity: number; // Int!
+    salePrice: number; // Int!
+  }
   deleteCategoryInput: { // input type
     id: number; // Int!
   }
@@ -36,11 +41,26 @@ export interface NexusGenInputs {
   getOneProductInput: { // input type
     id: number; // Int!
   }
+  inputObjectType: { // input type
+    createdAt?: string | null; // String
+  }
   newCategoryInput: { // input type
     name: string; // String!
   }
   sellProductInput: { // input type
     count: number; // Int!
+    id: number; // Int!
+  }
+  updateProductInput: { // input type
+    categoryId?: number | null; // Int
+    code?: string | null; // String
+    count?: number | null; // Int
+    end_price?: number | null; // Float
+    name?: string | null; // String
+    original_price?: number | null; // Float
+    start_price?: number | null; // Float
+  }
+  updateProductWhere: { // input type
     id: number; // Int!
   }
 }
@@ -84,6 +104,28 @@ export interface NexusGenObjects {
     count: number; // Int!
     nodes: NexusGenRootTypes['Product'][]; // [Product!]!
   }
+  soldProduct: { // root type
+    createdAt: string; // String!
+    id: number; // Int!
+    product: NexusGenRootTypes['Product']; // Product!
+    productId: number; // Int!
+    quantity: number; // Int!
+    salePrice: number; // Int!
+  }
+  soldProducts: { // root type
+    nodes: NexusGenRootTypes['soldProduct'][]; // [soldProduct!]!
+    total: number; // Int!
+    totalOriginalPrice: number; // Int!
+  }
+  soldProductsCharts: { // root type
+    soldProuctsCharts: NexusGenRootTypes['soldProductsChartsField'][]; // [soldProductsChartsField!]!
+  }
+  soldProductsChartsField: { // root type
+    from: string; // String!
+    to: string; // String!
+    totalOriginalPrice: number; // Int!
+    totalSaledPrice: number; // Int!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -105,9 +147,11 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createCategory: NexusGenRootTypes['Category']; // Category!
     createProduct: NexusGenRootTypes['Product']; // Product!
+    createSoldProduct: NexusGenRootTypes['soldProduct']; // soldProduct!
     deleteCategory: NexusGenRootTypes['Product']; // Product!
     deleteProduct: NexusGenRootTypes['Product']; // Product!
     sellProduct: NexusGenRootTypes['Product']; // Product!
+    updateProduct: NexusGenRootTypes['Product']; // Product!
   }
   Product: { // field return type
     category: NexusGenRootTypes['category']; // category!
@@ -124,6 +168,8 @@ export interface NexusGenFieldTypes {
     categories: NexusGenRootTypes['Category'][]; // [Category!]!
     getOneProduct: NexusGenRootTypes['Product']; // Product!
     products: NexusGenRootTypes['products']; // products!
+    soldProducts: NexusGenRootTypes['soldProducts']; // soldProducts!
+    soldProductsCharts: NexusGenRootTypes['soldProductsCharts']; // soldProductsCharts!
   }
   category: { // field return type
     Product: NexusGenRootTypes['Product'][]; // [Product!]!
@@ -133,6 +179,28 @@ export interface NexusGenFieldTypes {
   products: { // field return type
     count: number; // Int!
     nodes: NexusGenRootTypes['Product'][]; // [Product!]!
+  }
+  soldProduct: { // field return type
+    createdAt: string; // String!
+    id: number; // Int!
+    product: NexusGenRootTypes['Product']; // Product!
+    productId: number; // Int!
+    quantity: number; // Int!
+    salePrice: number; // Int!
+  }
+  soldProducts: { // field return type
+    nodes: NexusGenRootTypes['soldProduct'][]; // [soldProduct!]!
+    total: number; // Int!
+    totalOriginalPrice: number; // Int!
+  }
+  soldProductsCharts: { // field return type
+    soldProuctsCharts: NexusGenRootTypes['soldProductsChartsField'][]; // [soldProductsChartsField!]!
+  }
+  soldProductsChartsField: { // field return type
+    from: string; // String!
+    to: string; // String!
+    totalOriginalPrice: number; // Int!
+    totalSaledPrice: number; // Int!
   }
 }
 
@@ -145,9 +213,11 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createCategory: 'Category'
     createProduct: 'Product'
+    createSoldProduct: 'soldProduct'
     deleteCategory: 'Product'
     deleteProduct: 'Product'
     sellProduct: 'Product'
+    updateProduct: 'Product'
   }
   Product: { // field return type name
     category: 'category'
@@ -164,6 +234,8 @@ export interface NexusGenFieldTypeNames {
     categories: 'Category'
     getOneProduct: 'Product'
     products: 'products'
+    soldProducts: 'soldProducts'
+    soldProductsCharts: 'soldProductsCharts'
   }
   category: { // field return type name
     Product: 'Product'
@@ -173,6 +245,28 @@ export interface NexusGenFieldTypeNames {
   products: { // field return type name
     count: 'Int'
     nodes: 'Product'
+  }
+  soldProduct: { // field return type name
+    createdAt: 'String'
+    id: 'Int'
+    product: 'Product'
+    productId: 'Int'
+    quantity: 'Int'
+    salePrice: 'Int'
+  }
+  soldProducts: { // field return type name
+    nodes: 'soldProduct'
+    total: 'Int'
+    totalOriginalPrice: 'Int'
+  }
+  soldProductsCharts: { // field return type name
+    soldProuctsCharts: 'soldProductsChartsField'
+  }
+  soldProductsChartsField: { // field return type name
+    from: 'String'
+    to: 'String'
+    totalOriginalPrice: 'Int'
+    totalSaledPrice: 'Int'
   }
 }
 
@@ -184,6 +278,9 @@ export interface NexusGenArgTypes {
     createProduct: { // args
       input: NexusGenInputs['createProductInput']; // createProductInput!
     }
+    createSoldProduct: { // args
+      input: NexusGenInputs['createSoldProductInput']; // createSoldProductInput!
+    }
     deleteCategory: { // args
       input: NexusGenInputs['deleteCategoryInput']; // deleteCategoryInput!
     }
@@ -192,6 +289,10 @@ export interface NexusGenArgTypes {
     }
     sellProduct: { // args
       input: NexusGenInputs['sellProductInput']; // sellProductInput!
+    }
+    updateProduct: { // args
+      input: NexusGenInputs['updateProductInput']; // updateProductInput!
+      where: NexusGenInputs['updateProductWhere']; // updateProductWhere!
     }
   }
   Query: {
@@ -202,6 +303,9 @@ export interface NexusGenArgTypes {
       skip: number; // Int!
       take: number; // Int!
       where?: NexusGenInputs['fliterProductsInput'] | null; // fliterProductsInput
+    }
+    soldProducts: { // args
+      input: NexusGenInputs['inputObjectType']; // inputObjectType!
     }
   }
 }

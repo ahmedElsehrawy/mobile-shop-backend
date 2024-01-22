@@ -11,9 +11,11 @@ type Category {
 type Mutation {
   createCategory(input: newCategoryInput!): Category!
   createProduct(input: createProductInput!): Product!
+  createSoldProduct(input: createSoldProductInput!): soldProduct!
   deleteCategory(input: deleteCategoryInput!): Product!
   deleteProduct(input: deleteProductInput!): Product!
   sellProduct(input: sellProductInput!): Product!
+  updateProduct(input: updateProductInput!, where: updateProductWhere!): Product!
 }
 
 type Product {
@@ -32,6 +34,8 @@ type Query {
   categories: [Category!]!
   getOneProduct(where: getOneProductInput!): Product!
   products(skip: Int!, take: Int!, where: fliterProductsInput): products!
+  soldProducts(input: inputObjectType!): soldProducts!
+  soldProductsCharts: soldProductsCharts!
 }
 
 type category {
@@ -48,6 +52,12 @@ input createProductInput {
   name: String!
   original_price: Float!
   start_price: Float!
+}
+
+input createSoldProductInput {
+  productId: Int!
+  quantity: Int!
+  salePrice: Int!
 }
 
 input deleteCategoryInput {
@@ -67,6 +77,10 @@ input getOneProductInput {
   id: Int!
 }
 
+input inputObjectType {
+  createdAt: String
+}
+
 input newCategoryInput {
   name: String!
 }
@@ -78,5 +92,45 @@ type products {
 
 input sellProductInput {
   count: Int!
+  id: Int!
+}
+
+type soldProduct {
+  createdAt: String!
+  id: Int!
+  product: Product!
+  productId: Int!
+  quantity: Int!
+  salePrice: Int!
+}
+
+type soldProducts {
+  nodes: [soldProduct!]!
+  total: Int!
+  totalOriginalPrice: Int!
+}
+
+type soldProductsCharts {
+  soldProuctsCharts: [soldProductsChartsField!]!
+}
+
+type soldProductsChartsField {
+  from: String!
+  to: String!
+  totalOriginalPrice: Int!
+  totalSaledPrice: Int!
+}
+
+input updateProductInput {
+  categoryId: Int
+  code: String
+  count: Int
+  end_price: Float
+  name: String
+  original_price: Float
+  start_price: Float
+}
+
+input updateProductWhere {
   id: Int!
 }

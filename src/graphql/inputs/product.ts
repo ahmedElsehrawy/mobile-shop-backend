@@ -42,3 +42,23 @@ export const getOneProductInput = inputObjectType({
     t.nonNull.int("id");
   },
 });
+
+export const updateProductInput = inputObjectType({
+  name: "updateProductInput",
+  definition(t) {
+    t.nullable.string("name");
+    t.nullable.string("code");
+    t.nullable.int("count");
+    t.nullable.float("original_price");
+    t.nullable.float("start_price");
+    t.nullable.float("end_price");
+    t.nullable.int("categoryId");
+  },
+});
+
+export const updateProductWhere = inputObjectType({
+  name: "updateProductWhere",
+  definition(t) {
+    t.nonNull.int("id");
+  },
+});

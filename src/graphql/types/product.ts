@@ -15,6 +15,8 @@ import {
   sellProductInput,
   fliterProductsInput,
   getOneProductInput,
+  updateProductInput,
+  updateProductWhere,
 } from "../inputs";
 
 const Category = objectType({
@@ -181,6 +183,29 @@ export const getOneProduct = queryField("getOneProduct", {
     return await ctx.prisma.product.findUnique({
       where: {
         id: args.where.id,
+      },
+      include: {
+        category: true,
+      },
+    });
+  },
+});
+
+export const updateProduct = mutationField("updateProduct", {
+  type: nonNull(Product),
+  args: {
+    input: nonNull(updateProductInput),
+    where: nonNull(updateProductWhere),
+  },
+  //@ts-ignore
+  resolve: async (_root, args, ctx: Context) => {
+    return await ctx.prisma.product.update({
+      where: {
+        id: args.where.id,
+      },
+      data: args.input,
+      include: {
+        category: true,
       },
     });
   },
